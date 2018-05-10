@@ -23,7 +23,7 @@ socket_results.connect ("tcp://"+system_ip+":%s" % port)
 topicfilter = "9"
 print ("filter:",topicfilter)
 socket_results.setsockopt(zmq.SUBSCRIBE, topicfilter)
--
+
 
 def splitArray(A,B,n):
 	a = np.array([row [0:n/2] for row in A[0:n/2]])
