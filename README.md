@@ -16,13 +16,13 @@ Instructions:
 
 1. Initiate the apprpritate value of teh variable "system_ip" in files `slave.py` and `master.py`
 2. Run the forwarding servers:
-> python forwarder_device.py &
-> python forwarder_device2.py &
+>> python forwarder_device.py &
+>> python forwarder_device2.py &
 3. Run the Slave instances on same or different VMs:
-> python slave.py 0
-> python slave.py 1
-> python slave.py 2
-> python slave.py 3
+>> python slave.py 0
+>> python slave.py 1
+>> python slave.py 2
+>> python slave.py 3
 4. Run the Master instance:
-> python master.py
+>> python master.py
 
