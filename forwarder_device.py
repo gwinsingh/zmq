@@ -14,6 +14,7 @@ def main():
         backend = context.socket(zmq.PUB)
         backend.bind("tcp://*:5560")
 
+        print ("Forwared ACTIVE")
         zmq.device(zmq.FORWARDER, frontend, backend)
     except Exception, e:
         print e

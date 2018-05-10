@@ -5,21 +5,25 @@ import modules
 import zmq
 import sys
 
+
+system_ip = "192.168.0.132"
+
+
 port = "5559"
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.connect("tcp://192.168.0.132:%s" % port)
+socket.connect("tcp://"+system_ip+":%s" % port)
 
 port = "5660"
 # Socket to talk to server
 context_results = zmq.Context()
 socket_results = context_results.socket(zmq.SUB)
 print "Collecting updates from server..."
-socket_results.connect ("tcp://192.168.0.132:%s" % port)
+socket_results.connect ("tcp://"+system_ip+":%s" % port)
 topicfilter = "9"
 print ("filter:",topicfilter)
 socket_results.setsockopt(zmq.SUBSCRIBE, topicfilter)
-
+-
 
 def splitArray(A,B,n):
 	a = np.array([row [0:n/2] for row in A[0:n/2]])
@@ -45,11 +49,6 @@ def combine (A) :
 	q= np.concatenate( (c,d), axis =1 ) 
 	result = np.concatenate( (p,q), axis =0 )
 	return result
-
-def generateQuery(i, j):
-	msg = str(i)+' '+str(j)
-	print("Generating Query: %s"%(msg))
-	modules.sendToQueue('qinfo', msg)
 
 def compileResult(VMs):
 	parts = 0
@@ -88,16 +87,10 @@ def distributeQuery(N, VMs=4):
 	msgs = splitArray(A,A,N)
 	for vm in range(VMs):
 		print("Sending Query: quater(%s)"%(vm))
-		# modules.sendToQueue('qinfo', msgs[vm])
-		# generateQuery(i, j)
-		# print (vm, msgs[vm])
 		socket.send("%d %s" % (vm, msgs[vm]))
     	time.sleep(0.1)
 	time.sleep(0.5)
 	compileResult(VMs)
-	# end_time = time.time()
-	# time_taken = end_time-start_time
-	# print("The computation took %d seconds" %(time_taken))
 
 
 inp = raw_input("Distributed Algorithm to perform matrix multiplication\nEnter the value of N for the Matrix NxN:\n")
